@@ -10,8 +10,9 @@
     <h2>Álbumes</h2>
     <ul>
       <li v-for="album in albums" :key="album.id">
-        {{ album.title }}
+        {{ album.title.toUpperCase() }}
         <img v-if="album.photos.length > 0" :src="album.photos[0].thumbnailUrl" alt="Thumbnail" />
+        <h5>Fotos del álbum</h5>
         <ul>
           <li v-for="photo in album.photos" :key="photo.id">{{ photo.title }}</li>
         </ul>
@@ -107,21 +108,19 @@ export default {
       this.newTodoError = !/^[a-zA-Z\s]*$/.test(this.newTodo);
     },
 
-    // Agregar un nuevo TODO
     addTodo() {
       if (!this.newTodoError && this.newTodo.trim() !== '') {
         const newTodo = {
           userId: this.user.id,
           title: this.newTodo.trim(),
           completed: false,
-          id: Date.now(), // Podrías generar un ID más robusto según tus necesidades
+          id: Date.now(),
         };
         this.todos.push(newTodo);
         this.newTodo = '';
       }
     },
 
-    // Eliminar un TODO
     deleteTodo(todoId) {
       const index = this.todos.findIndex(todo => todo.id === todoId);
       if (index !== -1) {
