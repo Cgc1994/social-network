@@ -8,7 +8,7 @@
     <p>Nombre de la compañía: {{ user.company.name }}</p>
 
     <h2>Álbumes</h2>
-    <table>
+    <table class="user-table">
       <thead>
         <tr>
           <th>Nombre del Álbum</th>
@@ -143,7 +143,13 @@ export default {
     },
     async viewAlbum(album) {
       const recentlyVisitedAlbums = JSON.parse(localStorage.getItem('recentlyVisitedAlbums')) || [];
-      recentlyVisitedAlbums.push({ id: album.id, title: album.title });
+      const dateOptions = { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+      recentlyVisitedAlbums.push({
+        id: album.id,
+        name: this.user.name,
+        title: album.title,
+        time: new Date().toLocaleDateString('es-ES', dateOptions),
+      });
       setRecentlyVisitedAlbums(recentlyVisitedAlbums);
 
       this.$router.push({ name: 'album-photos', params: { id: album.id } });
@@ -172,5 +178,21 @@ h1 {
 .error-message {
   color: red;
   margin-top: 5px;
+}
+
+.user-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.user-table th, .user-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.user-table th {
+  background-color: #f2f2f2;
 }
 </style>
