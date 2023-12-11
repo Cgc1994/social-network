@@ -1,23 +1,33 @@
 <template>
   <div v-if="loaded" class="single-user-container">
     <h1>{{ user.name }}</h1>
-    <p>User: {{ user.username }}</p>
+    <p>Usuario: {{ user.username }}</p>
     <p>Email: {{ user.email }}</p>
-    <p>City: {{ user.address.city }}</p>
+    <p>Ciudad: {{ user.address.city }}</p>
     <p>Website: {{ user.website }}</p>
-    <p>Company name: {{ user.company.name }}</p>
+    <p>Nombre de la compañía: {{ user.company.name }}</p>
 
     <h2>Álbumes</h2>
-    <ul>
-      <li v-for="album in albums" :key="album.id">
-        {{ album.title.toUpperCase() }}
-        <img v-if="album.photos.length > 0" :src="album.photos[0].thumbnailUrl" alt="Thumbnail" />
-        <h5>Fotos del álbum</h5>
-        <ul>
-          <li v-for="photo in album.photos" :key="photo.id">{{ photo.title }}</li>
-        </ul>
-      </li>
-    </ul>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre del Álbum</th>
+          <th>Portada</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="album in albums" :key="album.id">
+          <td>{{ album.title }}</td>
+          <td v-if="album.photos.length > 0">
+            <img :src="album.photos[0].thumbnailUrl" alt="Thumbnail" />
+          </td>
+          <td>
+            <button @click="viewAlbum(album)">Ver Álbum</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
     <h2>TODOs</h2>
     <div>
@@ -42,6 +52,9 @@
 </template>
 
 <script>
+
+import { getRecentlyVisitedAlbums, setRecentlyVisitedAlbums } from '@/services/localStorageService';
+
 export default {
   name: 'SingleUserView',
   data() {
@@ -53,6 +66,7 @@ export default {
       newTodoError: false,
       searchText: '',
       loaded: false,
+      recentlyVisitedAlbums: getRecentlyVisitedAlbums(),
     };
   },
   async beforeMount() {
@@ -126,6 +140,13 @@ export default {
       if (index !== -1) {
         this.todos.splice(index, 1);
       }
+    },
+    async viewAlbum(album) {
+      const recentlyVisitedAlbums = JSON.parse(localStorage.getItem('recentlyVisitedAlbums')) || [];
+      recentlyVisitedAlbums.push({ id: album.id, title: album.title });
+      setRecentlyVisitedAlbums(recentlyVisitedAlbums);
+
+      this.$router.push({ name: 'album-photos', params: { id: album.id } });
     },
   },
 };

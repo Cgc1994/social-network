@@ -1,6 +1,6 @@
 <template>
   <div class="navbar">
-    <router-link to="/">Main Page</router-link>
+    <router-link to="/">Home</router-link>
   </div>
 </template>
 

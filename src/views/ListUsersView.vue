@@ -1,6 +1,6 @@
 <template>
   <div v-if="loaded" class="list-users-container">
-    <h1>List of Users</h1>
+    <h1>Listado de usuarios</h1>
     <ul class="user-list">
       <li v-for="user in users" :key="user.id" class="user-item">
         <a @click="navigateToUser(user.id)" class="user-link">{{ user.name }}</a>
