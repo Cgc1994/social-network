@@ -6,11 +6,13 @@ import SingleUserView from '@/views/SingleUserView.vue';
 const routes = [
   {
     path: '/',
-    component: ListUsersView
+    component: ListUsersView,
+    name: 'list-users',
   },
   {
     path: '/user/:id',
-    component: SingleUserView
+    component: SingleUserView,
+    name: 'single-user',
   }
 ];
 

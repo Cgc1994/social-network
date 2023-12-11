@@ -3,7 +3,7 @@
     <h1>List of Users</h1>
     <ul class="user-list">
       <li v-for="user in users" :key="user.id" class="user-item">
-        <router-link :to="'/user/' + user.id" class="user-link">{{ user.name }}</router-link>
+        <a @click="navigateToUser(user.id)" class="user-link">{{ user.name }}</a>
       </li>
     </ul>
   </div>
@@ -31,6 +31,9 @@ export default {
       } catch (error) {
         console.error('Error al obtener usuarios:', error);
       }
+    },
+    navigateToUser(userId) {
+      this.$router.push({ name: 'single-user', params: { id: userId } });
     },
   },
 };
