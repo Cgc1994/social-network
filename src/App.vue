@@ -1,7 +1,6 @@
 <template>
   <Navbar />
   <ListUsersView/>
-  <router-view></router-view>
   <!-- <SingleUserView msg="Welcome to Your Vue.js App"/> -->
 </template>
 
