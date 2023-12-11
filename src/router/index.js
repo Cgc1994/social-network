@@ -1,21 +1,11 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import ListUsersView from '@/views/ListUsersView.vue';
-import SingleUserView from '@/views/SingleUserView.vue';
+import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
-  {
-    path: '/',
-    component: ListUsersView
-  },
-  {
-    path: '/user/:id',
-    component: SingleUserView
-  }
-];
+]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(process.env.BASE_URL),
   routes
-});
+})
 
-export default router;
+export default router
